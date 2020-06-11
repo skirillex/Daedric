@@ -19,3 +19,6 @@ scripts/bots/daedric_bot.icx
 .vscode
 venv
 Daedric.zip
+icon/
+.venv
+Dockerfile3
