@@ -20,13 +20,14 @@ tbears start
 ./start_tbears.sh
 ./install.sh
 
-## for docker use docker -v path/to/file:path/to/docker 
+
+
+## for docker use docker -v path/to/file:/Daedric/mainnet
 ## the keystore file should be in the mount point directory
-
-
 
 if [ $network = mainnet ]
 then
+  # configures Daedric to use included keystore file + password
   cp /Daedric/config/mainnet/keystores/operator.icx /Daedric/config/mainnet/keystores/operator.icx.original
   cp /Daedric/config/mainnet/keystores/operator.password.txt /Daedric/config/mainnet/keystores/operator.password.txt.original
   rm /Daedric/config/mainnet/keystores/operator.password.txt
@@ -44,21 +45,24 @@ fi
 
 if [ $network = mainnet ]
 then
-# the python file below does not exist yet
+# deploy to mainnet
   python ./insert_mainnet_password.py \
     && ./scripts/score/deploy_score.sh -n mainnet -t ICXUSD
-# have it print the score address! or some tracking of it maybe instructions from github
+
 else
+# deploy to testnet
   python ./insert_testnet_password.py \
     && ./scripts/score/deploy_score.sh -n yeouido -t ICXUSD
 fi
 
 if [ $network = mainnet ]
 then
+# copy over the deployed score address to mounted volume
   cp /Daedric/config/mainnet/score_address.txt /Daedric/mainnet
 else
   echo "#######################################################"
   echo "####   Score Address:" && cat /Daedric/config/yeouido/score_address.txt
+  echo " "
   echo "#######################################################"
 fi
 
