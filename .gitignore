@@ -23,3 +23,8 @@ icon/
 .venv
 Dockerfile3
 cron-pricebot
+__pycache__
+Daedric/__pycache__
+deploy_tests/
+Daedric/test_constants.py
+Daedric/test_version.py
